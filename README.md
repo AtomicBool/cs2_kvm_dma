@@ -23,10 +23,7 @@
 	There's some error when use“player_index + offset”, so some offset are converted to INT format. I choosed the easiest way :)
 
 ### about update
-	This repo was done in July.
-	But I'm in a boarding school now. Unluckily, I didn't know there's lots of people bring their PC with monitor here until last Thursday a friend told me that. So I brought my laptop when AUG 2th. but it can't work well with playing games in VM although I enable KVM/GPU passthrough.
-	I'll try to bring my PC here when Christmas vacation.
-	At that time, I'll try to coding new features to this repository.
+	Waitting for my PC with GPU passthrough to make a new one for CS2
 
 
 
