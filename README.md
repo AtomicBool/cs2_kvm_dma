@@ -4,10 +4,9 @@
 1. Triggerbot with random press/release time
 
 ```
-	*TODO list:
-	add method to detect key event in VM.
-	add No recoil.
-	add wallhack(maybe radar , glow ..... no idea about it)*
+	*TODO list: start in 2024/1？
+         cs2 support
+
 ```
 ### How to use
 	Run a VM with GPU passthrough.
