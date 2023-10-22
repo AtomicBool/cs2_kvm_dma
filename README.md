@@ -5,24 +5,25 @@
 
 ```
 	*TODO list: start in 2024/1？
-         cs2 support
+         Working on the cheat for ApexLegends
+	Try to fix the issue with the format of Offsets in this project
 
 ```
 ### How to use
 	Run a VM with GPU passthrough.
-	in linux , run "build.sh" to build this. Don't forget to install rustc,gcc,make..
+	in Linux, run "build.sh" to build this. Don't forget to install rustc,gcc,make..
 	please correct me if wrong.
 
 ### about codes
-	Used Hazedumper offsets
+	Used Hazedumper's offsets
  	Used Memflow LIB
   
-	Just added one function getModuleBase() to memory part.
+	Just added one function getModuleBase() to the memory part.
 	Other codes in memory R/W part are pasted from [apex kvm dma pub](https://github.com/MisterY52/apex_dma_kvm_pub "apex kvm dma pub")
-	There's some error when use“player_index + offset”, so some offset are converted to INT format. I choosed the easiest way :)
+	Some errors happened when using “player_index + offset”, so some offsets are converted to INT format. I chose the easiest way :)
 
 ### about update
-	Waitting for my PC with GPU passthrough to make a new one for CS2
+	Waiting for my PC with GPU passthrough to make a new one for CS2
 
 
 
