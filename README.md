@@ -1,29 +1,24 @@
 # CSGO KVM DMA
 
 ### Main Feature
-1. Triggerbot with random press/release time
+1. Read Player's health through Memflow
 
 ```
-	*TODO list: start in 2024/1？
-         Working on the cheat for ApexLegends
-	Try to fix the issue with the format of Offsets in this project
+	*TODO list: 
+	Nothing (for this repositry)
 
 ```
 ### How to use
 	Run a VM with GPU passthrough.
 	in Linux, run "build.sh" to build this. Don't forget to install rustc,gcc,make..
-	please correct me if wrong.
+	please correct me if i miss anything.
 
 ### about codes
-	Used Hazedumper's offsets
- 	Used Memflow LIB
+ 	Used Memflow LIB to R/W memory
   
-	Just added one function getModuleBase() to the memory part.
-	Other codes in memory R/W part are pasted from [apex kvm dma pub](https://github.com/MisterY52/apex_dma_kvm_pub "apex kvm dma pub")
-	Some errors happened when using “player_index + offset”, so some offsets are converted to INT format. I chose the easiest way :)
+	Codes in memory R/W part are basicly pasted from [apex kvm dma pub](https://github.com/MisterY52/apex_dma_kvm_pub "apex kvm dma pub")
+ 	I just add a function to get module addr.
 
-### about update
-	Waiting for my PC with GPU passthrough to make a new one for CS2
 
 
 
