@@ -1,4 +1,4 @@
-# CSGO KVM DMA
+# CS2 KVM DMA
 
 ### Main Feature
 1. Read Player's health through Memflow
