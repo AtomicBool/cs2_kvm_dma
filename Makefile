@@ -33,7 +33,7 @@ all: cs_dma
 
 .DEFAULT_GOAL := all
 
-clean
+clean:
 	rm -rf ./build/cs_dma
 	rm -rf /usr/lib/vmm.so
 	rm -rf /usr/lib/leechcore.so
