@@ -246,8 +246,8 @@ uint64_t getEntityByClassName(std::string class_name)
     for(int i = 64; i < 1024; i++){
         uint64_t entity_addr = getControllerByID(i);
         // m_pentity: 0x10;  m_designername: 0x20;
-        std::string entity_name = mem.readString(mem.Read<uint64_t>(mem.Read<uint64_t>(entity_addr + 0x10) + 0x20));
-        if(entity_name.find(class_name) != std::string::npos){
+        std::string entity_type_name = mem.readString(mem.Read<uint64_t>(mem.Read<uint64_t>(entity_addr + 0x10) + 0x20));
+        if(entity_type_name.find(class_name) != std::string::npos){
             return entity_addr;
         }
     }   

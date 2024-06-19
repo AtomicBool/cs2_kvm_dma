@@ -140,8 +140,8 @@ void UpdatePlayers(){
         for(int i = 0; i < 64; i++){
             PlayerController PlayerController = getController(EntityListEntry, i);
             PlayerPawn PlayerPawn = PlayerController.getPawn(EntityListEntry);
-
-            if(radar){
+            std::string player_name = PlayerController.getName();
+            if(radar && player_name.empty()){ //stupid way but works
                 json m_player_data{};
                 m_player_data["m_idx"] = i;
                 m_player_data["m_name"] = PlayerController.getName();
