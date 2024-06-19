@@ -1,0 +1,6 @@
+build/libmemflow_qemu.x86_64.so
+build/mouse.onnx
+build/cs_dma
+build/mirage.tri
+.vscode
+notes.md
