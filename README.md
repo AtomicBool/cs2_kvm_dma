@@ -34,7 +34,7 @@ AIMBOT
 		input `/usr/local/lib/`
 		sudo ldconfig
 	```
--  train a `.onnx` model, check [Training AI Part](https://github.com/atombottle/cs2_kvm_dma/main/README.md#training-ai-only-tested-on-windows)
+-  train a `.onnx` model, check [Training AI Part](https://github.com/atombottle/cs2_kvm_dma?tab=readme-ov-file#training-ai-only-tested-on-windows)
 -  NPM 
 	- `sudo pacman -S npm`
 	- Trouble Shooting: Update gcc if it says CPP version is too low
@@ -54,7 +54,11 @@ AIMBOT
 
 ### Training AI (Only tested on Windows)
 
-- 
+- Better targeting the blue ball twice which makes AI looks like human.
+- `cd ./ai`
+- run `collect_mouse_data.py`
+- copy some test csv file
+- run `train.py` 
 
 ### Dump .tri file from cs2 map (Only tested on Windows) (Not needed yet but suggest)
 - Download Source2Viewer
