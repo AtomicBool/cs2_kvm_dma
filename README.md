@@ -84,7 +84,7 @@ sudo make or sudo make -j4
 - Basically, how it work is cheat send data to web_server, \
   so you have to set the IP of webserver in cs_dma.cpp\
   and ur friends can run react and set IP in react to the IP of ur PC. (with port-forwarding or FRP)\
-  or you can run the react and they port-forwarding both ports of webserver and react project.\
+  or you can run the react and port-forwarding both ports of webserver and react project.\
   What I'm using now is set the IP in cs_dma.cpp to 127.0.0.1 and run web_server on my linux, \
   I connected my PC with a laptop and sharing WIFI through my laptop so that I can access it on my phone   
 
