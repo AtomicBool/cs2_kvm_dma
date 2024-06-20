@@ -81,12 +81,9 @@ sudo make or sudo make -j4
 - ./cs_dma.cpp seach`ws://` and change IP
 - Port of webserver to connect is in ./radar/react/App.jsx & ./cs_dma.cpp
 - Port of webpage ./react/vite.config.js
-- Basically, how it work is cheat send data to web_server, \
-  so you have to set the IP of webserver in cs_dma.cpp\
-  and ur friends can run react and set IP in react to the IP of ur PC. (with port-forwarding or FRP)\
-  or you can run the react and port-forwarding both ports of webserver and react project.\
-  What I'm using now is set the IP in cs_dma.cpp to 127.0.0.1 and run web_server on my linux, \
-  I connected my PC with a laptop and sharing WIFI through my laptop so that I can access it on my phone   
+- Basically, how it work is cheat send data to web_server and react recieve the data from web_server\
+  One example of how to set the network is set the ip in `cs_dma.cpp` to `127.0.0.1`, and run web_server on linux
+  Then use another PC or linux to run react project\ Eventually, you can access radar on iPad&Phone&Laptop
 
 ### Sharing Radar
 - TCP: port of web page (default: 8080)
