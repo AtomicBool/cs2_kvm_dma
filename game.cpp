@@ -250,7 +250,8 @@ uint64_t getEntityByClassName(std::string class_name)
         if(entity_type_name.find(class_name) != std::string::npos){
             return entity_addr;
         }
-    }   
+    }
+    return 0;
 }
 
 // other funcs
