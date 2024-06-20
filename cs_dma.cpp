@@ -61,7 +61,7 @@ void RCS(){
         Vector2D punchAngles = local.punchAngles;
 
         if(local.shotsFired > 1){
-            Vector2D delta = prev_punchAngles - (punchAngles * 2.f);
+            Vector2D delta = -(prev_punchAngles - (punchAngles * 2.f));
 
             int mouse_relative_x = (int) (delta.y / (local.sensitivity * 0.0224f));
             int mouse_relative_y = (int) (delta.x / (local.sensitivity * 0.0224f));
@@ -125,7 +125,7 @@ void UpdatePlayers(){
                 m_data["m_bomb"]["m_blow_time"] = mem.Read<float>(planted_c4 + OFFSET_C4_BLOW_TIME) - mem.Read<float>(mem.Read<uint64_t>(client_base + OFFSET_GLOBAL_VARS) + 0x34);
                 m_data["m_bomb"]["m_is_defused"] = mem.Read<bool>(planted_c4 + OFFSET_C4_DEFUSED);
                 m_data["m_bomb"]["m_is_defusing"] = mem.Read<bool>(planted_c4 + OFFSET_C4_DEFUSING);
-                m_data["m_bomb"]["m_defuse_time"] = mem.Read<bool>(planted_c4 + OFFSET_C4_DEFUSE_TIME) - mem.Read<float>(mem.Read<uint64_t>(client_base + OFFSET_GLOBAL_VARS) + 0x34);
+                m_data["m_bomb"]["m_defuse_time"] = mem.Read<float>(planted_c4 + OFFSET_C4_DEFUSE_TIME) - mem.Read<float>(mem.Read<uint64_t>(client_base + OFFSET_GLOBAL_VARS) + 0x34);
             }
 
             //radar
@@ -141,7 +141,7 @@ void UpdatePlayers(){
             PlayerController PlayerController = getController(EntityListEntry, i);
             PlayerPawn PlayerPawn = PlayerController.getPawn(EntityListEntry);
             std::string player_name = PlayerController.getName();
-            if(radar && player_name.empty()){ //stupid way but works
+            if(radar && !player_name.empty()){ //stupid way but works
                 json m_player_data{};
                 m_player_data["m_idx"] = i;
                 m_player_data["m_name"] = PlayerController.getName();
