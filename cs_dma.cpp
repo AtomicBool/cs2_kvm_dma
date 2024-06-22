@@ -73,6 +73,9 @@ void RCS(){
         }else{
             prev_punchAngles.x = prev_punchAngles.y = 0.f;
         }
+
+//printf("rcs running\n");
+
     }
 }
 
@@ -184,6 +187,7 @@ void UpdatePlayers(){
 	        web_socket->send(m_data.dump());
 	    }
 	    if(radar) web_socket->poll();
+		//printf("%s\n\n\n\n", m_data.dump().c_str());
     }
 }
 
@@ -227,8 +231,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    const std::string formatted_address = std::format("ws://192.168.122.1:22006/cs2_webradar");
-    web_socket = ws::from_url(formatted_address);
+    web_socket = ws::from_url("ws://127.0.0.1:22006/cs2_webradar");
     if (!web_socket)
     {
         std::cout << "[-] Failed to initialize WebSocket!" << std::endl;

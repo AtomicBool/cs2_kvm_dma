@@ -1,11 +1,11 @@
 //https://github.com/a2x/cs2-dumper/blob/main/output/offsets.hpp
-#define OFFSET_LOCAL_PAWN           0x181A9C8   	//dwLocalPlayerPawn
+#define OFFSET_LOCAL_PAWN           0x181A9B8   	//dwLocalPlayerPawn
 #define OFFSET_LOCAL_CONTROLLER     0x1A04768   	//dwLocalPlayerController
 #define OFFSET_VIEW_ANGLES          0x1A23848   	//dwViewAngles
 #define OFFSET_SENSITIVITY          0x1A13248   	//dwSensitivity
 #define OFFSET_VIEW					0x1A16A60		//dwViewMatrix
 #define OFFSET_ENTITY_LIST			0x19B49B8		//dwEntityList
-#define OFFSET_GLOBAL_VARS			0x180E510		//dwGlobalVars
+#define OFFSET_GLOBAL_VARS			0x180E500		//dwGlobalVars
 #define OFFSET_MAP_NAME				0x1A42E0 		//dwGameTypes_mapName
 #define OFFSET_C4					0x1A1B7A8		//dwPlantedC4
 
