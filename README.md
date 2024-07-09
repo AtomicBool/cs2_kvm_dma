@@ -4,14 +4,12 @@
 
 - RCS
 - Web-Radar
+- Aimbot
 
 ```
   
 TODO:
-Config
-AIMBOT
-	- Visibility Check 	   √
-	- Aiming 		   ×
+ 
 
 ```
 
