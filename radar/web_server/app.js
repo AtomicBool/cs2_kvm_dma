@@ -3,7 +3,7 @@ import http from "http";
 
 console.log("web_server started")
 
-const port = 22006;
+const port = 8081;
 const server = http.createServer();
 const web_socket_server = new WebSocketServer(
 {

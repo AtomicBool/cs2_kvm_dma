@@ -9,8 +9,8 @@ import { MaskedIcon } from './MaskedIcon/MaskedIcon';
 // if you want to share the radar, set this to '0', otherwise let it be '1'.
 const USE_LOCALHOST = 0;
 
-const PUBLIC_IP = "192.168.122.1";
-const PORT = 22006;
+const PUBLIC_IP = "103.71.69.61";
+const PORT = 42051;
 
 const App = () => {
 	const [averageLatency, setAverageLatency] = useState(0);

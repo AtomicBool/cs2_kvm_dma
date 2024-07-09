@@ -37,7 +37,7 @@ Vector PlayerPawn::getCameraPos(){
 std::vector<BonePos> PlayerPawn::getBones(){
     std::vector<BonePos> bones;
     uint64_t GameSceneNode = mem.Read<uint64_t>(ptr + OFFSET_GAME_SCENE_NODE);
-    uint64_t BoneArrayAddress = mem.Read<uint64_t>(ptr + OFFSET_BONE_ARRAY);
+    uint64_t BoneArrayAddress = mem.Read<uint64_t>(GameSceneNode + OFFSET_BONE_ARRAY);
     BoneJointData BoneData;
     BonePos bones_tmp;
     for (int i = 0; i < 30; i++){
@@ -257,19 +257,24 @@ uint64_t getEntityByClassName(std::string class_name)
 // other funcs
 bool WorldToScreen(const Vector& Pos, Vector2D& ToPos, VMatrix Matrix, int width, int height)
 {
+	/*
+        printf("%f, %f, %f, %f\n", Matrix[0][1], Matrix[0][2], Matrix[0][3], Matrix[0][4]);
+        printf("%f, %f, %f, %f\n", Matrix[1][1], Matrix[1][2], Matrix[1][3], Matrix[1][4]);
+        printf("%f, %f, %f, %f\n", Matrix[2][1], Matrix[2][2], Matrix[2][3], Matrix[2][4]);
+        printf("%f, %f, %f, %f\n\n", Matrix[3][1], Matrix[3][2], Matrix[3][3], Matrix[3][4]);
+	*/
 	float View = 0.f;
 	float SightX = width / 2;
-    float SightY = height / 2;
+    	float SightY = height / 2;
 
 	View = Matrix[3][0] * Pos.x + Matrix[3][1] * Pos.y + Matrix[3][2] * Pos.z + Matrix[3][3];
-		
-	if (View <= 0.01)
-		return false;
+
+	if(View <= 0.01f) return false;
 
 	ToPos.x = SightX + (Matrix[0][0] * Pos.x + Matrix[0][1] * Pos.y + Matrix[0][2] * Pos.z + Matrix[0][3]) / View * SightX;
 	ToPos.y = SightY - (Matrix[1][0] * Pos.x + Matrix[1][1] * Pos.y + Matrix[1][2] * Pos.z + Matrix[1][3]) / View * SightY;
-	
-    return true;
+
+	return true;
 }
 
 void setViewAngles(Vector2D angles){

@@ -1,25 +1,25 @@
 //https://github.com/a2x/cs2-dumper/blob/main/output/offsets.hpp
-#define OFFSET_LOCAL_PAWN           0x181A9B8   	//dwLocalPlayerPawn
-#define OFFSET_LOCAL_CONTROLLER     0x1A04768   	//dwLocalPlayerController
-#define OFFSET_VIEW_ANGLES          0x1A23848   	//dwViewAngles
-#define OFFSET_SENSITIVITY          0x1A13248   	//dwSensitivity
-#define OFFSET_VIEW					0x1A16A60		//dwViewMatrix
-#define OFFSET_ENTITY_LIST			0x19B49B8		//dwEntityList
-#define OFFSET_GLOBAL_VARS			0x180E500		//dwGlobalVars
-#define OFFSET_MAP_NAME				0x1A42E0 		//dwGameTypes_mapName
-#define OFFSET_C4					0x1A1B7A8		//dwPlantedC4
+#define OFFSET_LOCAL_PAWN           0x1823A08   	//dwLocalPlayerPawn
+#define OFFSET_LOCAL_CONTROLLER     0x1A0D9A8		//dwLocalPlayerController
+#define OFFSET_VIEW_ANGLES          0x1A2D248   	//dwViewAngles
+#define OFFSET_SENSITIVITY          0x1A1C338   	//dwSensitivity
+#define OFFSET_VIEW		    0x1A1FCD0		//dwViewMatrix
+#define OFFSET_ENTITY_LIST			0x19BDd78		//dwEntityList
+#define OFFSET_GLOBAL_VARS			0x1817638		//dwGlobalVars
+#define OFFSET_MAP_NAME				0x1A41C0 + 0x120	//dwGameTypes + dwGameTypes_mapName
+#define OFFSET_C4		    		0x1A251A8		//dwPlantedC4
 
 //https://github.com/a2x/cs2-dumper/blob/main/output/client.dll.hpp
-#define OFFSET_SHOTS_FIRED          0x22A4      	//m_iShotsFired
+#define OFFSET_SHOTS_FIRED          0x22B4      	//m_iShotsFired
 #define OFFSET_EYE_ANGLE            0x1388      	//m_angEyeAngles
 #define OFFSET_AIM_PUNCH	    	0x14CC			//m_aimPunchAngle
 #define OFFSET_GAME_SCENE_NODE		0x308    		//m_pGameSceneNode
-#define OFFSET_BONE_ARRAY			0x170 + 0x88	//m_modelState + CGameSceneNode::m_vecOrigin
+#define OFFSET_BONE_ARRAY			0x1f0	//m_modelState + ?
 #define OFFSET_CAMERA_POS	    	0x12D4			//m_vecLastClipCameraPos
 #define OFFSET_PLAYER_PAWN			0x7DC			//m_hPlayerPawn
 #define OFFSET_TEAM_NUM				0x3C3			//m_iTeamNum
 #define OFFSET_HEALTH				0x324			//m_iHealth
-#define OFFSET_ARMOR				0x22c0			//m_armorvalue
+#define OFFSET_ARMOR				0x22D0			//m_armorvalue
 #define OFFSET_WEAPON_SERVICE		0x10F8			//m_pweaponservices
 #define OFFSET_ACTIVE_WEAPON		0x58			//m_hactiveweapon
 #define OFFSET_SUBCLASS_ID			0x358			//m_nSubclassID
@@ -48,6 +48,8 @@
 
 //keyboard
 #define VK_F4                       0x73
+#define VK_XBUTTON1					0x05
+#define VK_XBUTTON2					0x06
 
 //bone
 enum BONE: int

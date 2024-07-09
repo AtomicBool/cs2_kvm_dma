@@ -17,7 +17,7 @@ bool c_keys::InitKeyboard()
 			uintptr_t tmp = VMMDLL_ProcessGetModuleBaseU(mem.vHandle, pid, const_cast<LPSTR>("win32ksgd.sys"));
 			uintptr_t g_session_global_slots = tmp + 0x3110;
 			uintptr_t user_session_state = mem.ReadPID<uintptr_t>(mem.ReadPID<uintptr_t>(mem.ReadPID<uintptr_t>(g_session_global_slots, pid), pid), pid);
-			gafAsyncKeyStateExport = user_session_state + 0x3690;
+			gafAsyncKeyStateExport = user_session_state + 0x36a8;
 			if (gafAsyncKeyStateExport > 0x7FFFFFFFFFFF)
 				break;
 		}
@@ -200,7 +200,19 @@ void QMP::moveto(moves to){
 	if( abs(to.x) > 1 || abs(to.y) > 1){
 		while(true){
 			moves point_to_move = { 0 , 0 };
-			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+			auto start = std::chrono::system_clock::now();
+			while(true){
+				const auto now = std::chrono::system_clock::now();
+
+				const auto duration = now - start;
+
+				if (duration >= std::chrono::milliseconds(1)){
+					break;
+				}
+			}
+
+			//std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
 			if(to.x > 1){
 				to.x -= 1;
@@ -226,7 +238,18 @@ void QMP::moveto(moves to){
 			}
 		}
 	}else{
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		//std::this_thread::sleep_for(std::chrono::nanoseconds(1000000));
+		auto start = std::chrono::system_clock::now();
+                while(true){
+                        const auto now = std::chrono::system_clock::now();
+
+                        const auto duration = now - start;
+
+                        if (duration >= std::chrono::milliseconds(1)){
+                        	break;
+                	}
+                }
+
 		MoveMouse(to.x, to.y);
 	}
 }

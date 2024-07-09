@@ -6,7 +6,8 @@
 struct BoneJointData
 {
 	Vector Pos;
-	char pad[0x14];
+	float Scale;
+	char pad[0x10];
 };
 
 struct BonePos

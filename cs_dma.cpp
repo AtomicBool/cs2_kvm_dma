@@ -17,7 +17,6 @@ typedef struct local_player{
 };
 
 typedef struct player{
-
     std::vector<BonePos> bones;
 };
 
@@ -36,26 +35,29 @@ ws::pointer web_socket;
 std::string map_name;
 json m_data{};
 
+//aimbot
+BonePos selected_bone;
+
 /*
     Cheat Settings
 */
 //web-radar
-bool radar = true;
+bool radar = false;
 
 //rcs
 bool rcs = true;
 
 //aimbot
-bool aimbot = false;
-Vector ray_end_pos; //test
+bool aimbot = true;
+uint32_t aim_key = VK_XBUTTON2;
+uint32_t secondary_key = VK_XBUTTON1;
+float aim_range = 70.0f;
 
 void RCS(){
     Vector2D prev_punchAngles = Vector2D{ 0 , 0 };
 
     while(game_base && rcs){
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
-
-	    PlayerPawn LocalPawn = getLocalPawn();
 
 	    Vector2D viewAngles = local.viewAngles;
         Vector2D punchAngles = local.punchAngles;
@@ -73,9 +75,6 @@ void RCS(){
         }else{
             prev_punchAngles.x = prev_punchAngles.y = 0.f;
         }
-
-//printf("rcs running\n");
-
     }
 }
 
@@ -143,7 +142,10 @@ void UpdatePlayers(){
         for(int i = 0; i < 64; i++){
             PlayerController PlayerController = getController(EntityListEntry, i);
             PlayerPawn PlayerPawn = PlayerController.getPawn(EntityListEntry);
+
             std::string player_name = PlayerController.getName();
+            bool is_dead = (PlayerPawn.getHealth() <= 0);
+
             if(radar && !player_name.empty()){ //stupid way but works
                 json m_player_data{};
                 m_player_data["m_idx"] = i;
@@ -155,7 +157,7 @@ void UpdatePlayers(){
                 m_player_data["m_position"]["x"] = PlayerPawn.getPos().x;
                 m_player_data["m_position"]["y"] = PlayerPawn.getPos().y;
                 m_player_data["m_eye_angle"] = PlayerPawn.getViewAngles().y;
-                m_player_data["m_is_dead"] = (PlayerPawn.getHealth() <= 0);
+                m_player_data["m_is_dead"] = is_dead;
                 m_player_data["m_model_name"] = PlayerPawn.getModelName();
                 m_player_data["m_steam_id"] = PlayerController.getSteamID();
                 m_player_data["m_money"] = PlayerController.getCash();
@@ -177,23 +179,102 @@ void UpdatePlayers(){
                 m_data["m_players"].push_back(m_player_data);
             }
 
-            if(PlayerPawn.ptr == LocalPawn.ptr){
-                //nothing
-            }
 	    }
-	    if (duration >= std::chrono::milliseconds(5) && radar)
-        {
+        //websocket
+	    if (duration >= std::chrono::milliseconds(50) && radar)
+        	{
             start = now;
 	        web_socket->send(m_data.dump());
 	    }
 	    if(radar) web_socket->poll();
-		//printf("%s\n\n\n\n", m_data.dump().c_str());
+	    //printf("radar: %s\n", m_data.dump().c_str());
     }
 }
 
+typedef struct aimPosList{
+    PlayerPawn pawn;
+    float dist;
+    int x = 0;
+    int y = 0;
+}aimPosList;
+
 void Aimbot(){
+    uint64_t last_target;
+
     while(game_base && aimbot){
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        PlayerPawn LocalPawn = getLocalPawn();
+        Vector local_pos = LocalPawn.getPos();
+        
+        uint64_t EntityListEntry = mem.Read<uint64_t>(mem.Read<uint64_t>(client_base + OFFSET_ENTITY_LIST) + 0x10);
+
+        std::vector<aimPosList> list;
+
+        for(int i = 0; i < 64; i++){
+            PlayerController PlayerController = getController(EntityListEntry, i);
+            PlayerPawn PlayerPawn = PlayerController.getPawn(EntityListEntry);
+
+            std::string player_name = PlayerController.getName();
+            bool is_dead = (PlayerPawn.getHealth() <= 0);
+        
+            //aimbot
+            if(keyboard.IsKeyDown(aim_key)){
+                BonePos preferred_bone;
+                float arrange_distence = FLT_MAX; //arrange
+                if(player_name.empty()) continue;
+                players[i].bones = PlayerPawn.getBones();
+                //player not in screen
+                if(!players[i].bones[head].in_screen && !players[i].bones[leg_lower_L].in_screen && !players[i].bones[leg_lower_R].in_screen){
+                    continue;
+                }else if(PlayerPawn.ptr == LocalPawn.ptr){
+                    continue;
+                }else if (!is_dead)
+                {
+                    bool has_target = false;
+                    //select the cloest bone
+                    for(BonePos bone: players[i].bones){
+                        if(bone.in_screen){
+                            float screen_dist = bone.ScreenPos.DistTo(Vector2D{960, 540});
+                            if(screen_dist < arrange_distence && screen_dist <= aim_range && map.is_visible(local.CameraPos, bone.Pos)){
+                                //if the dist is cloest and bone is visible
+                                arrange_distence = screen_dist;
+                                preferred_bone = bone;
+                                has_target = true;
+                            }
+                        }
+                    }
+                    float screen_dist = players[i].bones[head].ScreenPos.DistTo(Vector2D{960, 540});
+                    
+                    if(keyboard.IsKeyDown(secondary_key) && screen_dist <= aim_range && map.is_visible(local.CameraPos, players[i].bones[head].Pos)){
+                        preferred_bone = players[i].bones[head];
+                    }
+                    selected_bone = preferred_bone;
+                    Vector2D aimPos_screen = selected_bone.ScreenPos;
+                    if(abs(aimPos_screen.x - 960) < 2 && abs(aimPos_screen.y - 960) < 2) continue;
+                    aimPos_screen.x -= 960;
+                    aimPos_screen.y -= 540;
+                    
+                    if(has_target) list.push_back({PlayerPawn, PlayerPawn.getPos().DistTo(local_pos), (int)aimPos_screen.x, (int)aimPos_screen.y});
+
+                    has_target = false;
+                }
+            }
+        }
+        //qmp.SmoothMove((int)aimPos_screen.x, (int)aimPos_screen.y);
+
+        aimPosList aimPos;
+        float minimum_dist = FLT_MAX;
+        for(auto pos: list){
+            aimPos = (minimum_dist > pos.dist) ? pos : aimPos;
+            if(pos.pawn.ptr == last_target){
+                aimPos = pos;   
+                break;
+            }
+        }
+
+        if(abs(aimPos.dist) > 1){
+            qmp.SmoothMove(aimPos.x, aimPos.y);
+            last_target = aimPos.pawn.ptr;
+        }
     }
 }
 
@@ -204,7 +285,7 @@ int main(int argc, char *argv[]){
     }std::cout << "[+] Memory API initialized!" << std::endl;
 
     if(argc > 1){
-        std::cout << "[+] Loading meshes data from file" << argv[1] << ".tri" << std::endl;
+        std::cout << "[+] Loading meshes from file " << argv[1] << ".tri" << std::endl;
         map.load_map(argv[1]);
     }
     else printf("[-] Please input map name\n");
@@ -231,7 +312,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    web_socket = ws::from_url("ws://127.0.0.1:22006/cs2_webradar");
+    web_socket = ws::from_url("ws://127.0.0.1:8081/cs2_webradar");
     if (!web_socket)
     {
         std::cout << "[-] Failed to initialize WebSocket!" << std::endl;
