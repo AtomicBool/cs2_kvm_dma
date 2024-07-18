@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-std=c++2a -I./includes/ -I/usr/local/include/opencv4/ -I./sdk/ -L./libs -l:vmm.so -l:leechcore.so -l:leechcore_device_microvmi.so -L/usr/local/lib -l:libopencv_core.so.410 -l:libopencv_dnn.so.410 -Wno-multichar
+CXXFLAGS=-std=c++2a -I./includes/ -I/usr/local/include/opencv4/ -I./sdk/ -L./libs -l:vmm.so -l:leechcore.so -l:leechcore_device_microvmi.so -L/usr/local/lib -l:libopencv_core.so -l:libopencv_dnn.so -Wno-multichar
 LIBS=-lm -Wl,--no-as-needed -ldl -lpthread
 
 OUTDIR=./build
